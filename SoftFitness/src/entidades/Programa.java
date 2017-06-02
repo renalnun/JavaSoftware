@@ -14,7 +14,7 @@ import java.util.Date;
 public class Programa {
     
     private int id;
-    private String tipo; 
+    private String nombre; 
     private Date fecha;
     private Date hora;
     private int capacidad;
@@ -26,7 +26,7 @@ public class Programa {
 
     public Programa(int id, String tipo, Date fecha, Date hora, int capacidad, int cupo, String sala, String descripcion, String estado, int id_instructor) {
         this.id = id;
-        this.tipo = tipo;
+        this.nombre = tipo;
         this.fecha = fecha;
         this.hora = hora;
         this.capacidad = capacidad;
@@ -48,12 +48,12 @@ public class Programa {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Date getFecha() {

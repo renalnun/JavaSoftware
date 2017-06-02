@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Cliente {
     
-    private Integer id;
+    private int id;
     private String doc_identidad;
     private String nombre;
     private String apellido;
@@ -26,7 +26,7 @@ public class Cliente {
     private String direccion;
     private Date fecha_Reg;
     private String estado;
-    private Integer id_membresia;
+    private int id_membresia;
 
     public Cliente(Integer id, String doc_identidad, String nombre, String apellido, String correo,String sexo, String edad, double peso, String telefono_Movil, String telefono_Fijo, String direccion, Date fecha_Reg, String estado, Integer id_membresia) {
         this.id = id;

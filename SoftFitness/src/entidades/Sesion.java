@@ -18,10 +18,10 @@ public class Sesion {
     private Date hora_Fn;
     private Date fecha;
     private String estado;
-    private String id_Cliente;
+    private int id_Cliente;
     private int id_instructor;
 
-    public Sesion(int id, Date hora_In, Date hora_Fn, Date fecha, String estado, String id_Cliente, int id_instructor) {
+    public Sesion(int id, Date hora_In, Date hora_Fn, Date fecha, String estado, int id_Cliente, int id_instructor) {
         this.id = id;
         this.hora_In = hora_In;
         this.hora_Fn = hora_Fn;
@@ -74,11 +74,11 @@ public class Sesion {
         this.estado = estado;
     }
 
-    public String getId_Cliente() {
+    public int getId_Cliente() {
         return id_Cliente;
     }
 
-    public void setId_Cliente(String id_Cliente) {
+    public void setId_Cliente(int id_Cliente) {
         this.id_Cliente = id_Cliente;
     }
 

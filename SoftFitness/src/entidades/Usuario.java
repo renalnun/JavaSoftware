@@ -17,7 +17,7 @@ public class Usuario {
     private String rol;
     private String clave;
     private String estado;
-    private Date fecha_Reg;
+    private Date fecha_Reg; //
 
     public Usuario(int id, String rol, String clave, String estado, Date fecha_Reg) {
         this.id = id;
