@@ -5,6 +5,9 @@
  */
 package formularios;
 
+import entidades.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ariel
@@ -14,9 +17,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FrmPrincipal
      */
-    public FrmPrincipal() {
+    public FrmPrincipal(Usuario u) {
         initComponents();
         this.setLocationRelativeTo(null);
+        if ("operador".equalsIgnoreCase(u.getRol())) {
+            miUsuarios.setVisible(false);
+        }
     }
 
     /**
@@ -30,7 +36,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         mInicio = new javax.swing.JMenu();
-        miInicioSesion = new javax.swing.JMenuItem();
+        miCerrarSesion = new javax.swing.JMenuItem();
         mSalir = new javax.swing.JMenuItem();
         miIniciarSesion = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -42,7 +48,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mAdministracion = new javax.swing.JMenu();
         miInstructores = new javax.swing.JMenuItem();
         miClientes = new javax.swing.JMenuItem();
-        miUsuariosç = new javax.swing.JMenuItem();
+        miUsuarios = new javax.swing.JMenuItem();
         mEntrenamientos = new javax.swing.JMenu();
         miEntramanientoGrupal = new javax.swing.JMenuItem();
         miEntrenamientoPersonal2 = new javax.swing.JMenuItem();
@@ -50,18 +56,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
         miReportes = new javax.swing.JMenuItem();
         mConfiguraciones = new javax.swing.JMenu();
         miCambiarClave = new javax.swing.JMenuItem();
-        miCerrarSesion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288381_home.png"))); // NOI18N
 
-        miInicioSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288828_sign-in.png"))); // NOI18N
-        miInicioSesion.setText("Inicio Sesion");
-        mInicio.add(miInicioSesion);
+        miCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
+        miCerrarSesion.setText("Cerrar Sesion");
+        miCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCerrarSesionActionPerformed(evt);
+            }
+        });
+        mInicio.add(miCerrarSesion);
 
         mSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
         mSalir.setText("Salir");
+        mSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSalirActionPerformed(evt);
+            }
+        });
         mInicio.add(mSalir);
 
         jMenuBar1.add(mInicio);
@@ -110,9 +125,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         mAdministracion.add(miClientes);
 
-        miUsuariosç.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496289451_user_full.png"))); // NOI18N
-        miUsuariosç.setText("Usuarios");
-        mAdministracion.add(miUsuariosç);
+        miUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496289451_user_full.png"))); // NOI18N
+        miUsuarios.setText("Usuarios");
+        miUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUsuariosActionPerformed(evt);
+            }
+        });
+        mAdministracion.add(miUsuarios);
 
         mEntrenamientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496289905_Gym_2.png"))); // NOI18N
         mEntrenamientos.setText("Entrenamientos");
@@ -143,10 +163,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         miCambiarClave.setText("Cambiar Clave");
         mConfiguraciones.add(miCambiarClave);
 
-        miCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
-        miCerrarSesion.setText("Cerrar Sesion");
-        mConfiguraciones.add(miCerrarSesion);
-
         jMenuBar1.add(mConfiguraciones);
 
         setJMenuBar(jMenuBar1);
@@ -167,7 +183,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void miClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClientesActionPerformed
         // TODO add your handling code here:
+        FrmMantenimientoCliente frm = new FrmMantenimientoCliente();
+        frm.setVisible(true);
+        
     }//GEN-LAST:event_miClientesActionPerformed
+
+    private void mSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_mSalirActionPerformed
+
+    private void miUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUsuariosActionPerformed
+        // TODO add your handling code here:
+        FrmMantenimientoUsurario frm = new FrmMantenimientoUsurario();
+        frm.setVisible(true);
+    }//GEN-LAST:event_miUsuariosActionPerformed
+
+    private void miCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        int resp = JOptionPane.showConfirmDialog(null,"¿Desea cerrar Sesion?");
+        if (resp == JOptionPane.OK_OPTION) {
+            FrmLogin frm = new FrmLogin();
+            frm.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_miCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,12 +237,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmPrincipal().setVisible(true);
-            }
-        });
+        //java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FrmPrincipal().setVisible(true);
+//            }
+//        });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
@@ -223,10 +264,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miEntrenamientoPersonal;
     private javax.swing.JMenuItem miEntrenamientoPersonal2;
     private javax.swing.JMenu miIniciarSesion;
-    private javax.swing.JMenuItem miInicioSesion;
     private javax.swing.JMenuItem miInstructores;
     private javax.swing.JMenuItem miReportes;
     private javax.swing.JMenuItem miSalir;
-    private javax.swing.JMenuItem miUsuariosç;
+    private javax.swing.JMenuItem miUsuarios;
     // End of variables declaration//GEN-END:variables
 }

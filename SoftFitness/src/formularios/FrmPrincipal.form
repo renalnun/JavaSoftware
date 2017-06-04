@@ -11,13 +11,16 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="miInicioSesion">
+            <MenuItem class="javax.swing.JMenuItem" name="miCerrarSesion">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenes/1496288828_sign-in.png"/>
+                  <Image iconType="3" name="/imagenes/1496288659_exit-to-app.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Inicio Sesion"/>
+                <Property name="text" type="java.lang.String" value="Cerrar Sesion"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miCerrarSesionActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mSalir">
               <Properties>
@@ -26,6 +29,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mSalirActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -111,13 +117,16 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miClientesActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="miUsuarios&#xe7;">
+            <MenuItem class="javax.swing.JMenuItem" name="miUsuarios">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagenes/1496289451_user_full.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Usuarios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miUsuariosActionPerformed"/>
+              </Events>
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="mEntrenamientos">
               <Properties>
@@ -173,14 +182,6 @@
                   <Image iconType="3" name="/imagenes/1496288483_miscellaneous-46.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cambiar Clave"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="miCerrarSesion">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenes/1496288659_exit-to-app.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cerrar Sesion"/>
               </Properties>
             </MenuItem>
           </SubComponents>

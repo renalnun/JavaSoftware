@@ -5,13 +5,22 @@
  */
 package formularios;
 
+import entidades.Usuario;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author CltControl
  */
 public class FrmLogin extends javax.swing.JFrame {
-   
+    private Connection con;
 
     /**
      * Creates new form FrmIngresoUsuario
@@ -37,6 +46,7 @@ public class FrmLogin extends javax.swing.JFrame {
         bSalir = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         pContraseña = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -67,6 +77,8 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("SOTFITNESS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,11 +88,6 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(55, 55, 55)
-                            .addComponent(bAceptar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                            .addComponent(bSalir))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGap(46, 46, 46)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -88,13 +95,23 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addGap(68, 68, 68)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(tfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                .addComponent(pContraseña)))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                                .addComponent(pContraseña)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addComponent(bAceptar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                            .addComponent(bSalir)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(jLabel3)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -119,14 +136,69 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        dispose();
     }//GEN-LAST:event_bSalirActionPerformed
 
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
         // TODO add your handling code here:
+        Usuario u = new Usuario(tfUsuario.getText(), String.valueOf(pContraseña.getPassword()));
+        if(usuarioAutorizado(u)){
+            u.setClave(null);
+            FrmPrincipal frm = new FrmPrincipal(u);
+            frm.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null,
+                    "Usuario incorrecto!",
+                    "Login",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_bAceptarActionPerformed
-
+    
+    public boolean usuarioAutorizado (Usuario u){ 
+        ResultSet rs = null;
+        PreparedStatement st = null;
+        
+        try{ 
+            con = conexion.Conexion.conectar();
+            st = con.prepareStatement("SELECT * FROM usuario WHERE id = ? and clave = md5(?) and estado = ?");
+            st.setString(1, u.getId());
+            st.setString(2, u.getClave());
+            st.setString(3, "activo");
+            rs = st.executeQuery();
+            if(rs.next()){
+                u.setRol(rs.getString("rol"));
+                return true;
+            }
+            return false;
+        }catch(Exception e){ 
+            System.out.println("Error: consulta de usuario. \n"+e);            
+            return false;
+        }finally{ 
+            if ( con!=null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (st!=null) {
+                try{
+                    st.close();
+                }catch (SQLException ex) {
+                    Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (rs!= null) {
+                try{
+                    rs.close();
+                }catch (SQLException ex) {
+                    Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -169,6 +241,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JButton bSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField pContraseña;
     private javax.swing.JTextField tfUsuario;

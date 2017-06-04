@@ -45,6 +45,22 @@ public class Cliente {
         this.id_membresia = id_membresia;
     }
 
+    public Cliente(String doc_identidad, String nombre, String apellido, String correo, String sexo, String edad, double peso, String telefono_Movil, String telefono_Fijo, String direccion, String estado) {
+        this.doc_identidad = doc_identidad;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.sexo = sexo;
+        this.edad = edad;
+        this.peso = peso;
+        this.telefono_Movil = telefono_Movil;
+        this.telefono_Fijo = telefono_Fijo;
+        this.direccion = direccion;
+        this.estado = estado;
+    }
+
+    
+    
     public Cliente() {
     }
         

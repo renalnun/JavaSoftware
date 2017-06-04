@@ -13,13 +13,13 @@ import java.util.Date;
  */
 public class Usuario {
     
-    private int id;
+    private String id;
     private String rol;
     private String clave;
     private String estado;
-    private Date fecha_Reg; //
+    private Date fecha_Reg;
 
-    public Usuario(int id, String rol, String clave, String estado, Date fecha_Reg) {
+    public Usuario(String id, String rol, String clave, String estado, Date fecha_Reg) {
         this.id = id;
         this.rol = rol;
         this.clave = clave;
@@ -27,14 +27,19 @@ public class Usuario {
         this.fecha_Reg = fecha_Reg;
     }
 
+    public Usuario(String id, String clave) {
+        this.id = id;
+        this.clave = clave;
+    }
+    
     public Usuario() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

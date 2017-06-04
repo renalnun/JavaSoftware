@@ -41,13 +41,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="tfCedula" pref="153" max="32767" attributes="0"/>
+                          <Component id="tfDocIdentidad" pref="153" max="32767" attributes="0"/>
                           <Component id="tfNombres" max="32767" attributes="0"/>
                           <Component id="tfApellidos" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="tfPeso" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbTipo" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbSexo" alignment="0" max="32767" attributes="0"/>
                                   <Component id="tfEdad" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -66,7 +66,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                          <Component id="dFecha" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="tfDireccion" alignment="0" max="32767" attributes="0"/>
                               <Component id="tfTelefonoMovil" alignment="0" max="32767" attributes="0"/>
@@ -111,7 +111,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="tfCedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfDocIdentidad" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -131,7 +131,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="cbTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbSexo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -152,7 +152,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel11" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                          <Component id="dFecha" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -196,7 +196,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cedula"/>
+        <Property name="text" type="java.lang.String" value="Doc. de Identidad"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -246,6 +246,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bGuardarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bLimpiar">
       <Properties>
@@ -254,8 +257,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Limpiar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLimpiarActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfCedula">
+    <Component class="javax.swing.JTextField" name="tfDocIdentidad">
     </Component>
     <Component class="javax.swing.JTextField" name="tfNombres">
     </Component>
@@ -263,7 +269,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfEdad">
     </Component>
-    <Component class="javax.swing.JComboBox" name="cbTipo">
+    <Component class="javax.swing.JComboBox" name="cbSexo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
@@ -289,7 +295,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfTelefonoFijo">
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+    <Component class="com.toedter.calendar.JDateChooser" name="dFecha">
     </Component>
     <Component class="javax.swing.JComboBox" name="cbEstado">
       <Properties>
@@ -323,6 +329,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSalirActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

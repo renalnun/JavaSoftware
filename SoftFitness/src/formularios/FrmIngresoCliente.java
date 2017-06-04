@@ -5,11 +5,24 @@
  */
 package formularios;
 
+import entidades.Cliente;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author CltControl
  */
 public class FrmIngresoCliente extends javax.swing.JFrame {
+    
+    private boolean editar = false;
 
     /**
      * Creates new form FrmIngresoCliente
@@ -17,6 +30,43 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
     public FrmIngresoCliente() {
         initComponents();
         this.setLocationRelativeTo(null);
+        editar = false;
+    }
+    
+    private Connection con;
+    
+    public FrmIngresoCliente(Cliente c){
+        initComponents();
+        editar = true;
+        tfDocIdentidad.setEnabled(!editar);
+        tfDocIdentidad.setText(String.valueOf(c.getDoc_identidad()));
+        tfNombres.setText(String.valueOf(c.getNombre()));
+        tfApellidos.setText(String.valueOf(c.getApellido()));
+        tfEdad.setText(String.valueOf(c.getEdad()));
+        cbSexo.setSelectedItem(c.getSexo());
+        tfCorreo.setText(String.valueOf(c.getCorreo()));
+        tfTelefonoFijo.setText(String.valueOf(c.getTelefono_Fijo()));
+        tfTelefonoMovil.setText(String.valueOf(c.getTelefono_Movil()));
+        tfDireccion.setText(String.valueOf(c.getDireccion()));
+        cbEstado.setSelectedItem(c.getEstado());    
+        tfPeso.setText(String.valueOf(c.getPeso()));
+        dFecha.setDate(c.getFecha_Reg());
+        
+    }
+    
+    public void limpiarForm(){
+        tfDocIdentidad.setText(null);
+        tfNombres.setText(null);
+        tfApellidos.setText(null);
+        tfEdad.setText(null);
+        cbSexo.setSelectedItem(0);
+        tfCorreo.setText(null);
+        tfTelefonoFijo.setText(null);
+        tfTelefonoMovil.setText(null);
+        tfDireccion.setText(null);
+        cbEstado.setSelectedItem(0);    
+        tfPeso.setText(null);
+        dFecha.setDate(null);
     }
 
     /**
@@ -41,17 +91,17 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         bGuardar = new javax.swing.JButton();
         bLimpiar = new javax.swing.JButton();
-        tfCedula = new javax.swing.JTextField();
+        tfDocIdentidad = new javax.swing.JTextField();
         tfNombres = new javax.swing.JTextField();
         tfApellidos = new javax.swing.JTextField();
         tfEdad = new javax.swing.JTextField();
-        cbTipo = new javax.swing.JComboBox<>();
+        cbSexo = new javax.swing.JComboBox<>();
         tfPeso = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         tfDireccion = new javax.swing.JTextField();
         tfTelefonoMovil = new javax.swing.JTextField();
         tfTelefonoFijo = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dFecha = new com.toedter.calendar.JDateChooser();
         cbEstado = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -65,7 +115,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
 
         jLabel2.setText("Apellidos");
 
-        jLabel3.setText("Cedula");
+        jLabel3.setText("Doc. de Identidad");
 
         jLabel4.setText("Edad");
 
@@ -85,11 +135,21 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
 
         bGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496293572_save.png"))); // NOI18N
         bGuardar.setText("Guardar");
+        bGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGuardarActionPerformed(evt);
+            }
+        });
 
         bLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496298750_ic_layers_clear_48px.png"))); // NOI18N
         bLimpiar.setText("Limpiar");
+        bLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarActionPerformed(evt);
+            }
+        });
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
         jLabel12.setText("Lb.");
 
@@ -101,6 +161,11 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
 
         bSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
         bSalir.setText("Salir");
+        bSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,13 +186,13 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                            .addComponent(tfDocIdentidad, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                             .addComponent(tfNombres)
                             .addComponent(tfApellidos)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(tfPeso, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbSexo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(tfEdad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel12)))
@@ -141,7 +206,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(tfDireccion)
                                 .addComponent(tfTelefonoMovil)
@@ -175,7 +240,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,7 +256,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,7 +272,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,6 +297,182 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarForm();
+    }//GEN-LAST:event_bLimpiarActionPerformed
+
+    private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_bSalirActionPerformed
+
+    private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
+        // TODO add your handling code here:
+        if(validarForm()){
+            PreparedStatement st= null ;
+            try{
+                LocalDate todayLocalDate;
+                todayLocalDate = LocalDate.now( ZoneId.of( "America/Montreal" ) );
+
+                Cliente c = new Cliente(
+                        tfDocIdentidad.getText(),
+                        tfNombres.getText(),
+                        tfApellidos.getText(),
+                        tfEdad.getText(),
+                        cbSexo.getSelectedItem().toString(),
+                        tfCorreo.getText(),
+                        Double.parseDouble(tfPeso.getText()),
+                        tfTelefonoMovil.getText(),
+                        tfTelefonoFijo.getText(),
+                        tfDireccion.getText(),
+                        cbEstado.getSelectedItem().toString()  
+                    );
+                
+                con = conexion.Conexion.conectar();
+                
+                if (editar){
+                    st = con.prepareStatement("UPDATE cliente set nombres, apellidos, edad, sexo, correo_elec, peso, telefono_movil, telefono_fijo, estado, direccion");
+                    st.setString(1, c.getNombre());
+                    st.setString(2, c.getApellido());
+                    st.setString(3, c.getEdad());
+                    st.setString(4, c.getSexo());
+                    st.setString(5, c.getCorreo());
+                    st.setDouble(6, c.getPeso());   
+                    st.setString(7, c.getTelefono_Movil());
+                    st.setString(8, c.getTelefono_Fijo());
+                    st.setString(9, c.getEstado());
+                    st.setString(10, c.getDireccion());   
+                    
+                    st.executeUpdate();
+                    System.out.println("Actualizacion exitosa!");
+                }else {
+                    st = con.prepareStatement("INSERT INTO cliente (id, doc_identidad, nombres, apellidos, edad, sexo, correo_elec, peso, telefono_movil, telefono_fijo, estado, direccion, fecha_reg) VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    st.setString(0, c.getDoc_identidad());
+                    st.setString(1, c.getNombre());
+                    st.setString(2, c.getApellido());
+                    st.setString(3, c.getEdad());
+                    st.setString(4, c.getSexo());
+                    st.setString(5, c.getCorreo());
+                    st.setDouble(6, c.getPeso());   
+                    st.setString(7, c.getTelefono_Movil());
+                    st.setString(8, c.getTelefono_Fijo());
+                    st.setString(9, c.getEstado());
+                    st.setString(10, c.getDireccion());
+                    
+                    st.executeUpdate();
+                    System.out.println("Cliente guardado exitosamente!");
+                }
+                limpiarForm();
+                dispose();
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                if (con!=null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (st!=null) {
+                    try{
+                        st.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }        
+    
+     
+    }//GEN-LAST:event_bGuardarActionPerformed
+
+    public boolean validarForm(){
+        try {
+            Integer.parseInt(tfDocIdentidad.getText());            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                "El Doc. de Identidad debe tener valores válidos!",
+                "Administracion Cliente",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if( tfNombres.getText().isEmpty() ||
+            tfApellidos.getText().isEmpty() ||
+            tfEdad.getText().isEmpty() ||
+            cbSexo.getSelectedItem().toString().equalsIgnoreCase("") ||
+            tfCorreo.getText().isEmpty() ||
+            tfTelefonoFijo.getText().isEmpty() ||
+            tfTelefonoMovil.getText().isEmpty() ||
+            tfDireccion.getText().isEmpty() ||
+            cbEstado.getSelectedItem().toString().equalsIgnoreCase("") ||    
+            tfPeso.getText().isEmpty() ||
+            dFecha.getDate().toString().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(null,
+                    "El formulario esta imcompleto!", 
+                    "Administracion Cliente",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return    validarCliente(tfDocIdentidad.getText()); //Verifica la valides de un cliente         
+    }
+    
+    public boolean validarCliente(String docIdentidad){
+        if(!editar){
+            ResultSet rs= null;
+            PreparedStatement st= null;
+            
+            try{
+                con = conexion.Conexion.conectar();
+                st = con.prepareStatement("SELECT * FROM cliente WHERE doc_identidad");
+                st.setString(1, docIdentidad);
+                rs = st.executeQuery();
+                if(rs.next()){
+                    JOptionPane.showMessageDialog(null,
+                            "El cliente ya existe!",
+                            "Administracion Cliente",
+                            JOptionPane.ERROR_MESSAGE
+                            );
+                    return false;
+                }
+                return true;
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,
+                        "Validacion imposible!\n" + e,
+                        "Administracion Cliente",
+                        JOptionPane.ERROR_MESSAGE);          
+                return false;
+            } finally{
+                if ( con!=null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (st!=null) {
+                    try{
+                        st.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                if (rs!= null) {
+                    try{
+                        rs.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -272,8 +513,8 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
     private javax.swing.JButton bLimpiar;
     private javax.swing.JButton bSalir;
     private javax.swing.JComboBox<String> cbEstado;
-    private javax.swing.JComboBox<String> cbTipo;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JComboBox<String> cbSexo;
+    private com.toedter.calendar.JDateChooser dFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -289,9 +530,9 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField tfApellidos;
-    private javax.swing.JTextField tfCedula;
     private javax.swing.JTextField tfCorreo;
     private javax.swing.JTextField tfDireccion;
+    private javax.swing.JTextField tfDocIdentidad;
     private javax.swing.JTextField tfEdad;
     private javax.swing.JTextField tfNombres;
     private javax.swing.JTextField tfPeso;

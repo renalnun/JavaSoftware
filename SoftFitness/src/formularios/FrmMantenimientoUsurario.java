@@ -9,12 +9,12 @@ package formularios;
  *
  * @author Ariel
  */
-public class FrmMantenimientoInstructor extends javax.swing.JFrame {
+public class FrmMantenimientoUsurario extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmMantenimientoInstructor
+     * Creates new form FrmMantenimientoUsurario
      */
-    public FrmMantenimientoInstructor() {
+    public FrmMantenimientoUsurario() {
         initComponents();
     }
 
@@ -28,11 +28,11 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        cbTipo = new javax.swing.JComboBox<>();
+        tfDescripcion = new javax.swing.JTextField();
+        bConsultar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        tfDescripcion = new javax.swing.JTextField();
-        cbTipo = new javax.swing.JComboBox<>();
-        bConsultar = new javax.swing.JButton();
         bIngresar = new javax.swing.JButton();
         bEditar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
@@ -40,20 +40,24 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         miSalir = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Informacion sobre Instructores");
+        jLabel1.setText("Informacion de Usuarios");
+
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Usuario" }));
+
+        bConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search-16.png"))); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "CI", "Nombres", "Apellidos", "Edad", "Sexo", "Direccion", "Correo Elec.", "Telefono Fijo", "Telefono Movil", "Descripcion"
+                "Usuario", "Clave", "Rol", "Estado", "Fecha de Reg."
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -61,10 +65,6 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Cedula", "Sexo" }));
-
-        bConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search-16.png"))); // NOI18N
 
         bIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/plus-16.png"))); // NOI18N
         bIngresar.setText("Ingresar");
@@ -89,47 +89,46 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(tfDescripcion)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(bConsultar))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfDescripcion)
+                        .addGap(53, 53, 53)
+                        .addComponent(bIngresar)
                         .addGap(18, 18, 18)
-                        .addComponent(bConsultar)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(bIngresar)
-                .addGap(129, 129, 129)
-                .addComponent(bEditar)
-                .addGap(127, 127, 127)
-                .addComponent(bEliminar)
-                .addContainerGap(139, Short.MAX_VALUE))
+                        .addComponent(bEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bEliminar)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bConsultar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bConsultar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bIngresar)
                     .addComponent(bEditar)
                     .addComponent(bEliminar))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,20 +151,20 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMantenimientoInstructor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMantenimientoUsurario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMantenimientoInstructor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMantenimientoUsurario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMantenimientoInstructor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMantenimientoUsurario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmMantenimientoInstructor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmMantenimientoUsurario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMantenimientoInstructor().setVisible(true);
+                new FrmMantenimientoUsurario().setVisible(true);
             }
         });
     }

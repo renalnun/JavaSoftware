@@ -37,10 +37,6 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
         bEditar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        miIngresar = new javax.swing.JMenuItem();
-        miEditar = new javax.swing.JMenuItem();
-        miEliminar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -78,22 +74,6 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
 
         bEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288871_x.png"))); // NOI18N
         bEliminar.setText("Eliminar");
-
-        jMenu1.setText("Administracion");
-
-        miIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496289187_user_full_add.png"))); // NOI18N
-        miIngresar.setText("Ingresar");
-        jMenu1.add(miIngresar);
-
-        miEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496301757_user_full_edit.png"))); // NOI18N
-        miEditar.setText("Editar");
-        jMenu1.add(miEditar);
-
-        miEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496290449_user_full_remove.png"))); // NOI18N
-        miEliminar.setText("Eliminar");
-        jMenu1.add(miEliminar);
-
-        jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Salir");
 
@@ -197,14 +177,10 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JMenuItem miEditar;
-    private javax.swing.JMenuItem miEliminar;
-    private javax.swing.JMenuItem miIngresar;
     private javax.swing.JTable tResultado;
     private javax.swing.JTextField tfDescripcion;
     // End of variables declaration//GEN-END:variables
