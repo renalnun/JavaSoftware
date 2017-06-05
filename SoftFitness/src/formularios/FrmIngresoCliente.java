@@ -7,6 +7,7 @@ package formularios;
 
 import entidades.Cliente;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -304,7 +305,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
 
     private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        dispose();
     }//GEN-LAST:event_bSalirActionPerformed
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
@@ -312,7 +313,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
         if(validarForm()){
             PreparedStatement st= null ;
             try{
-                LocalDate todayLocalDate;
+                LocalDate todayLocalDate; 
                 todayLocalDate = LocalDate.now( ZoneId.of( "America/Montreal" ) );
 
                 Cliente c = new Cliente(
@@ -326,13 +327,14 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                         tfTelefonoMovil.getText(),
                         tfTelefonoFijo.getText(),
                         tfDireccion.getText(),
-                        cbEstado.getSelectedItem().toString()  
+                        cbEstado.getSelectedItem().toString(),
+                        dFecha.getDate()
                     );
                 
                 con = conexion.Conexion.conectar();
                 
                 if (editar){
-                    st = con.prepareStatement("UPDATE cliente set nombres, apellidos, edad, sexo, correo_elec, peso, telefono_movil, telefono_fijo, estado, direccion");
+                    st = con.prepareStatement("UPDATE cliente set nombres = ?, apellidos = ?, edad = ?, sexo = ?, correo_elec = ?, peso = ?, telefono_movil = ?, telefono_fijo = ?, estado = ?, direccion = ? WHERE id = ?");
                     st.setString(1, c.getNombre());
                     st.setString(2, c.getApellido());
                     st.setString(3, c.getEdad());
@@ -359,6 +361,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                     st.setString(8, c.getTelefono_Fijo());
                     st.setString(9, c.getEstado());
                     st.setString(10, c.getDireccion());
+                    st.setDate(11, (Date) c.getFecha_Reg());
                     
                     st.executeUpdate();
                     System.out.println("Cliente guardado exitosamente!");
@@ -386,7 +389,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
                 }
             }
         }        
-    
+     
      
     }//GEN-LAST:event_bGuardarActionPerformed
 
@@ -412,7 +415,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
             tfPeso.getText().isEmpty() ||
             dFecha.getDate().toString().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(null,
-                    "El formulario esta imcompleto!", 
+                    "Formulario imcompleto!", 
                     "Administracion Cliente",
                     JOptionPane.ERROR_MESSAGE);
             return false;

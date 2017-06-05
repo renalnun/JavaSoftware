@@ -180,21 +180,21 @@ public class FrmLogin extends javax.swing.JFrame {
                 try {
                     con.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (st!=null) {
                 try{
                     st.close();
                 }catch (SQLException ex) {
-                    Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (rs!= null) {
                 try{
                     rs.close();
                 }catch (SQLException ex) {
-                    Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

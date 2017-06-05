@@ -5,19 +5,42 @@
  */
 package formularios;
 
+import entidades.Usuario;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ariel
  */
 public class FrmIngresoUsuario extends javax.swing.JFrame {
+    private Connection con;
+    private boolean editar = false;
 
     /**
      * Creates new form FrmIngresoUsuario
      */
     public FrmIngresoUsuario() {
         initComponents();
+        editar = false;
     }
-
+    
+    public FrmIngresoUsuario(Usuario u) {
+        initComponents();
+        editar = true;
+        tfId.setEnabled(!editar);
+        tfId.setText(u.getId());
+        pClave.setText(null);
+       
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,12 +89,27 @@ public class FrmIngresoUsuario extends javax.swing.JFrame {
 
         bGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496293572_save.png"))); // NOI18N
         bGuardar.setText("Guardar");
+        bGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGuardarActionPerformed(evt);
+            }
+        });
 
         bLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496298750_ic_layers_clear_48px.png"))); // NOI18N
         bLimpiar.setText("Limpiar");
+        bLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarActionPerformed(evt);
+            }
+        });
 
         bSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
         bSalir.setText("Salir");
+        bSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,6 +187,162 @@ public class FrmIngresoUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
+        // TODO add your handling code here:
+        if(validarForm()){
+            PreparedStatement st = null;
+            try{
+                LocalDate todayLocalDate;
+                todayLocalDate = LocalDate.now( ZoneId.of( "America/Montreal" ) );
+                
+                Usuario u = new Usuario(
+                        tfId.getText(),
+                        String.valueOf(pClave.getPassword()),
+                        String.valueOf(cbEstado.getSelectedItem()),
+                        String.valueOf(cbRol.getSelectedItem()),
+                        dFecha.getDate()
+                );
+                con = conexion.Conexion.conectar();
+                if(editar){ 
+                    st = con.prepareStatement("UPDATE usuario set clave = ?, estado = ?, rol = ? WHERE id = ?");
+                    st.setString(1, u.getClave());
+                    st.setString(1, u.getEstado());
+                    st.setString(3,u.getRol()); 
+                    
+                    st.executeUpdate();
+                    System.out.println("Actualizacion exitosa!");
+                }else{
+                    st = con.prepareStatement("INSERT INTO usuario (id , clave, estado, rol, fecha_reg) VALUES (?,md5(?),?,?,?)");
+                    st.setString(1, u.getId());
+                    st.setString(2, u.getClave());
+                    st.setString(3, u.getEstado());
+                    st.setString(4,u.getRol()); 
+                    st.setDate(5, (Date) u.getFecha_Reg());
+                    
+                    st.executeUpdate();
+                    System.out.println("Usuario guardado exitosamente!");
+                }  
+            }catch (SQLException ex) {
+                Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                if (con!=null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (st!=null) {
+                    try{
+                        st.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_bGuardarActionPerformed
+
+    private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bSalirActionPerformed
+
+    private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarForm();
+    }//GEN-LAST:event_bLimpiarActionPerformed
+
+    public boolean validarForm(){
+        if(tfId.getText().isEmpty() ||
+           String.valueOf(pClave.getPassword()).isEmpty() ||
+           cbEstado.getSelectedItem().toString().equalsIgnoreCase("") ||
+           cbRol.getSelectedItem().toString().equalsIgnoreCase("") ||
+           dFecha.getDate().equals(0)
+                ){
+            JOptionPane.showMessageDialog(null,
+                    "Formulario incompleto!",
+                    "Administracion Usuario",
+                    JOptionPane.ERROR_MESSAGE
+                    );
+            return false;
+        }
+        
+        if (String.valueOf(pClave.getPassword()).length() < 6) {
+            JOptionPane.showMessageDialog(this,
+            "La contraseña debe tener minimo 6 caracteres!",
+            "Administracion Usuario",
+            JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return validarUsuario(tfId.getText());
+    }
+    
+    public boolean validarUsuario(String id){
+       
+        if(!editar){
+            ResultSet rs = null;
+            PreparedStatement st = null;
+            
+            try{
+                con = conexion.Conexion.conectar();
+                st = con.prepareStatement("SELECT * FROM usuario WHERE id ");
+                st.setString(1, id);
+                rs = st.executeQuery();
+                if(rs.next()){
+                    JOptionPane.showMessageDialog(null,
+                            "El usuario ya existe!",
+                            "Administracion Usuario",
+                            JOptionPane.ERROR_MESSAGE
+                            );
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,
+                        "Validacion imposible!\n" + e,
+                        "Administracion Usuario",
+                        JOptionPane.ERROR_MESSAGE);          
+                return false;
+            }finally{
+                if ( con!=null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (st!=null) {
+                    try{
+                        st.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                if (rs!= null) {
+                    try{
+                        rs.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    public void limpiarForm(){
+        tfId.setText(null);
+        pClave.setText(null);
+        cbEstado.setSelectedItem(0);
+        cbRol.setSelectedItem(0);
+        dFecha.setDate(null);
+    }
+    
     /**
      * @param args the command line arguments
      */
