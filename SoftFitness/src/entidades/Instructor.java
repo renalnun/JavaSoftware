@@ -37,6 +37,21 @@ public class Instructor {
         this.descripcion = descripcion;
     }
 
+    public Instructor(String doc_identidad, String nombre, String apellido, String correo, String sexo, String edad, String telefono_Movil, String telefono_Fijo, String direccion, String descripcion) {
+        this.doc_identidad = doc_identidad;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.sexo = sexo;
+        this.edad = edad;
+        this.telefono_Movil = telefono_Movil;
+        this.telefono_Fijo = telefono_Fijo;
+        this.direccion = direccion;
+        this.descripcion = descripcion;
+    }
+    
+    
+
     public Instructor() {
     }
 

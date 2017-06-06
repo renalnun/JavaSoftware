@@ -30,11 +30,13 @@ public class FrmIngresoUsuario extends javax.swing.JFrame {
      */
     public FrmIngresoUsuario() {
         initComponents();
+        this.setLocationRelativeTo(null);
         editar = false;
     }
     
     public FrmIngresoUsuario(Usuario u) {
         initComponents();
+        this.setLocationRelativeTo(null);
         editar = true;
         tfId.setEnabled(!editar);
         tfId.setText(u.getId());

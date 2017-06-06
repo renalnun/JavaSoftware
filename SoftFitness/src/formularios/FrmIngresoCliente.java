@@ -38,6 +38,7 @@ public class FrmIngresoCliente extends javax.swing.JFrame {
     
     public FrmIngresoCliente(Cliente c){
         initComponents();
+        this.setLocationRelativeTo(null);
         editar = true;
         tfDocIdentidad.setEnabled(!editar);
         tfDocIdentidad.setText(String.valueOf(c.getDoc_identidad()));

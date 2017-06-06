@@ -27,11 +27,6 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="379" max="-2" attributes="0"/>
-                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
@@ -44,9 +39,9 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="tfCedula" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="tfNombres" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="tfApellidos" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
+                                          <Component id="tfDocIdentidad" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfNombre" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfApellido" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -82,12 +77,9 @@
                       </Group>
                       <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfTelofonoFijo" max="32767" attributes="0"/>
-                                  <Component id="tfTelefonoMovil" min="-2" pref="158" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="90" max="32767" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="tfTelefonoFijo" max="32767" attributes="0"/>
+                              <Component id="tfTelefonoMovil" min="-2" pref="158" max="-2" attributes="0"/>
                           </Group>
                           <Component id="tfDescripcion" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -96,13 +88,21 @@
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="324" max="-2" attributes="0"/>
+                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -118,18 +118,18 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfCedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfDocIdentidad" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfNombres" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfTelofonoFijo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfTelefonoFijo" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -150,7 +150,7 @@
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfApellidos" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfApellido" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -230,11 +230,11 @@
         <Property name="text" type="java.lang.String" value="Telefono Movil"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfCedula">
+    <Component class="javax.swing.JTextField" name="tfDocIdentidad">
     </Component>
-    <Component class="javax.swing.JTextField" name="tfNombres">
+    <Component class="javax.swing.JTextField" name="tfNombre">
     </Component>
-    <Component class="javax.swing.JTextField" name="tfApellidos">
+    <Component class="javax.swing.JTextField" name="tfApellido">
     </Component>
     <Component class="javax.swing.JComboBox" name="cbSexo">
       <Properties>
@@ -253,7 +253,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfDireccion">
     </Component>
-    <Component class="javax.swing.JTextField" name="tfTelofonoFijo">
+    <Component class="javax.swing.JTextField" name="tfTelefonoFijo">
     </Component>
     <Component class="javax.swing.JTextField" name="tfTelefonoMovil">
     </Component>
@@ -281,6 +281,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bGuardarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bLimpiar">
       <Properties>
@@ -289,6 +292,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Limpiar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLimpiarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bSalir">
       <Properties>
@@ -297,6 +303,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSalirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>

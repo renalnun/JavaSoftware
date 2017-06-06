@@ -5,19 +5,53 @@
  */
 package formularios;
 
+import entidades.Instructor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ariel
  */
 public class FrmIngresoInstructor extends javax.swing.JFrame {
+    
+    private boolean editar = false;
+    private Connection con;
 
     /**
      * Creates new form FrmIngresoInstructor
      */
     public FrmIngresoInstructor() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        editar = false;
+    }
+    
+     public FrmIngresoInstructor(Instructor i) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        editar = true;
+        tfDocIdentidad.setEnabled(!editar);
+        tfDocIdentidad.setText(String.valueOf(i.getDoc_identidad()));
+        tfNombre.setText(String.valueOf(i.getNombre()));
+        tfApellido.setText(String.valueOf(i.getApellido()));
+        tfCorreo.setText(String.valueOf(i.getCorreo()));
+        tfEdad.setText(String.valueOf(i.getEdad()));
+        cbSexo.setSelectedItem(i.getSexo());
+        tfDireccion.setText(String.valueOf(i.getDireccion()));
+        tfDescripcion.setText(String.valueOf(i.getDescripcion()));
+        tfTelefonoFijo.setText(String.valueOf(i.getTelefono_Fijo()));
+        tfTelefonoMovil.setText(String.valueOf(i.getTelefono_Movil()));
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,13 +69,13 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tfCedula = new javax.swing.JTextField();
-        tfNombres = new javax.swing.JTextField();
-        tfApellidos = new javax.swing.JTextField();
+        tfDocIdentidad = new javax.swing.JTextField();
+        tfNombre = new javax.swing.JTextField();
+        tfApellido = new javax.swing.JTextField();
         cbSexo = new javax.swing.JComboBox<>();
         tfEdad = new javax.swing.JTextField();
         tfDireccion = new javax.swing.JTextField();
-        tfTelofonoFijo = new javax.swing.JTextField();
+        tfTelefonoFijo = new javax.swing.JTextField();
         tfTelefonoMovil = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         tfCorreo = new javax.swing.JTextField();
@@ -85,12 +119,27 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
 
         bGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496293572_save.png"))); // NOI18N
         bGuardar.setText("Guardar");
+        bGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGuardarActionPerformed(evt);
+            }
+        });
 
         bLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496298750_ic_layers_clear_48px.png"))); // NOI18N
         bLimpiar.setText("Limpiar");
+        bLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarActionPerformed(evt);
+            }
+        });
 
         bSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
         bSalir.setText("Salir");
+        bSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSalirActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Instructores");
 
@@ -100,10 +149,6 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(379, 379, 379)
-                        .addComponent(jLabel11)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -116,9 +161,9 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
                                             .addComponent(jLabel3))
                                         .addGap(89, 89, 89)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(tfCedula, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfNombres, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfApellidos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(tfDocIdentidad, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tfNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tfApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(94, 94, 94)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7)
@@ -143,20 +188,23 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
                                 .addComponent(jLabel6)))
                         .addGap(96, 96, 96)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfTelofonoFijo)
-                                    .addComponent(tfTelefonoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfTelefonoFijo)
+                                .addComponent(tfTelefonoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(tfDescripcion)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(bSalir)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel9))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(324, 324, 324)
+                                .addComponent(jLabel11)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,15 +218,15 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel1)
-                                    .addComponent(tfCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel2)
-                                    .addComponent(tfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
-                                    .addComponent(tfTelofonoFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfTelefonoFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8)
@@ -193,7 +241,7 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
                                 .addGap(26, 26, 26)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(tfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
@@ -226,6 +274,189 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfDescripcionActionPerformed
 
+    private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
+        // TODO add your handling code here:
+          if(validarForm()){
+            PreparedStatement st= null ;
+            try{
+                LocalDate todayLocalDate; 
+                todayLocalDate = LocalDate.now( ZoneId.of( "America/Montreal" ) );
+
+                Instructor i = new Instructor(
+                        tfDocIdentidad.getText(),
+                        tfNombre.getText(),
+                        tfApellido.getText(),
+                        tfEdad.getText(),
+                        cbSexo.getSelectedItem().toString(),
+                        tfCorreo.getText(),
+                        tfDescripcion.getText(),
+                        tfTelefonoMovil.getText(),
+                        tfTelefonoFijo.getText(),
+                        tfDireccion.getText()
+                    );
+                
+                con = conexion.Conexion.conectar();
+                
+                if (editar){
+                    st = con.prepareStatement("UPDATE instructor set nombres = ?, apellidos = ?, edad = ?, sexo = ?, correo_elec = ?, descripcion = ?, telefono_movil = ?, telefono_fijo = ?, direccion = ? WHERE id = ?");
+                    st.setString(1, i.getNombre());
+                    st.setString(2, i.getApellido());
+                    st.setString(3, i.getEdad());
+                    st.setString(4, i.getSexo());
+                    st.setString(5, i.getCorreo());
+                    st.setString(6, i.getDescripcion());   
+                    st.setString(7, i.getTelefono_Movil());
+                    st.setString(8, i.getTelefono_Fijo());
+                    st.setString(9, i.getDireccion());   
+                    
+                    st.executeUpdate();
+                    System.out.println("Actualizacion exitosa!");
+                }else {
+                    st = con.prepareStatement("INSERT INTO instructor (id, doc_identidad, nombres, apellidos, edad, sexo, correo_elec, descripcion, telefono_movil, telefono_fijo, direccion) VALUES (null,?,?,?,?,?,?,?,?,?,?)");
+                    st.setString(1, i.getDoc_identidad());
+                    st.setString(2, i.getNombre());
+                    st.setString(3, i.getApellido());
+                    st.setString(4, i.getEdad());
+                    st.setString(5, i.getSexo());
+                    st.setString(6, i.getCorreo());
+                    st.setString(7, i.getDescripcion());  
+                    st.setString(8, i.getTelefono_Movil());
+                    st.setString(9, i.getTelefono_Fijo());
+                    st.setString(10, i.getDireccion());
+                    
+                    st.executeUpdate();
+                    System.out.println("Instructor guardado exitosamente!");
+                }
+                limpiarForm();
+                dispose();
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                if (con!=null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (st!=null) {
+                    try{
+                        st.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        } 
+    }//GEN-LAST:event_bGuardarActionPerformed
+
+    private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarForm();
+    }//GEN-LAST:event_bLimpiarActionPerformed
+
+    private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_bSalirActionPerformed
+
+    public void limpiarForm(){ 
+        tfDocIdentidad.setText(null);
+        tfNombre.setText(null);
+        tfApellido.setText(null);
+        tfCorreo.setText(null);
+        tfEdad.setText(null);
+        cbSexo.setSelectedItem(0);
+        tfDireccion.setText(null);
+        tfDescripcion.setText(null);
+        tfTelefonoFijo.setText(null);
+        tfTelefonoMovil.setText(null);
+    }
+    
+    public boolean validarForm(){ 
+         try {
+            Integer.parseInt(tfDocIdentidad.getText());            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                "El Doc. de Identidad debe tener valores válidos!",
+                "Administracion Instructor",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if( tfNombre.getText().isEmpty() ||
+            tfApellido.getText().isEmpty() ||
+            tfEdad.getText().isEmpty() ||
+            cbSexo.getSelectedItem().toString().equalsIgnoreCase("") ||
+            tfCorreo.getText().isEmpty() ||
+            tfTelefonoFijo.getText().isEmpty() ||
+            tfTelefonoMovil.getText().isEmpty() ||
+            tfDireccion.getText().isEmpty() ||
+            tfDescripcion.getText().isEmpty()
+            ){
+            JOptionPane.showMessageDialog(null,
+                    "Formulario imcompleto!", 
+                    "Administracion Instructor",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return    validarInstructor(tfDocIdentidad.getText());
+    }
+    
+    public boolean validarInstructor(String docIdentidad){
+        if(!editar){
+            ResultSet rs= null;
+            PreparedStatement st= null;
+            
+            try{
+                con = conexion.Conexion.conectar();
+                st = con.prepareStatement("SELECT * FROM instructor WHERE doc_identidad");
+                st.setString(1, docIdentidad);
+                rs = st.executeQuery();
+                if(rs.next()){
+                    JOptionPane.showMessageDialog(null,
+                            "El instructor ya existe!",
+                            "Administracion Instructor",
+                            JOptionPane.ERROR_MESSAGE
+                            );
+                    return false;
+                }
+                return true;
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,
+                        "Validacion imposible!\n" + e,
+                        "Administracion Instructor",
+                        JOptionPane.ERROR_MESSAGE);          
+                return false;
+            } finally{
+                if ( con!=null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (st!=null) {
+                    try{
+                        st.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                if (rs!= null) {
+                    try{
+                        rs.close();
+                    }catch (SQLException ex) {
+                        Logger.getLogger(FrmIngresoInstructor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -277,14 +508,14 @@ public class FrmIngresoInstructor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField tfApellidos;
-    private javax.swing.JTextField tfCedula;
+    private javax.swing.JTextField tfApellido;
     private javax.swing.JTextField tfCorreo;
     private javax.swing.JTextField tfDescripcion;
     private javax.swing.JTextField tfDireccion;
+    private javax.swing.JTextField tfDocIdentidad;
     private javax.swing.JTextField tfEdad;
-    private javax.swing.JTextField tfNombres;
+    private javax.swing.JTextField tfNombre;
+    private javax.swing.JTextField tfTelefonoFijo;
     private javax.swing.JTextField tfTelefonoMovil;
-    private javax.swing.JTextField tfTelofonoFijo;
     // End of variables declaration//GEN-END:variables
 }

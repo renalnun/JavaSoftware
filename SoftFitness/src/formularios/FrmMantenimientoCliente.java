@@ -38,7 +38,7 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
         bEliminar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        miSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -68,17 +68,33 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
 
         bIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/plus-16.png"))); // NOI18N
         bIngresar.setText("Ingresar");
+        bIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bIngresarActionPerformed(evt);
+            }
+        });
 
         bEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288689_create.png"))); // NOI18N
         bEditar.setText("Editar");
+        bEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEditarActionPerformed(evt);
+            }
+        });
 
         bEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288871_x.png"))); // NOI18N
         bEliminar.setText("Eliminar");
 
         jMenu2.setText("Salir");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
-        jMenu2.add(jMenuItem1);
+        miSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
+        miSalir.setText("Salir");
+        miSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSalirActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miSalir);
 
         jMenuBar1.add(jMenu2);
 
@@ -135,6 +151,23 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_miSalirActionPerformed
+
+    private void bIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresarActionPerformed
+        // TODO add your handling code here:
+        FrmIngresoCliente frm = new FrmIngresoCliente();
+        frm.setVisible(true);
+    }//GEN-LAST:event_bIngresarActionPerformed
+
+    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
+        // TODO add your handling code here:
+        FrmIngresoCliente frm = new FrmIngresoCliente();
+        frm.setVisible(true);
+    }//GEN-LAST:event_bEditarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -179,8 +212,8 @@ public class FrmMantenimientoCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem miSalir;
     private javax.swing.JTable tResultado;
     private javax.swing.JTextField tfDescripcion;
     // End of variables declaration//GEN-END:variables

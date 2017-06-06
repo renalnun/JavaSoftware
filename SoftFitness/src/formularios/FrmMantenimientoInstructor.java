@@ -68,9 +68,19 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
 
         bIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/plus-16.png"))); // NOI18N
         bIngresar.setText("Ingresar");
+        bIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bIngresarActionPerformed(evt);
+            }
+        });
 
         bEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288689_create.png"))); // NOI18N
         bEditar.setText("Editar");
+        bEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEditarActionPerformed(evt);
+            }
+        });
 
         bEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288871_x.png"))); // NOI18N
         bEliminar.setText("Eliminar");
@@ -78,6 +88,12 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
         jMenu2.setText("Salir");
 
         miSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1496288659_exit-to-app.png"))); // NOI18N
+        miSalir.setText("Salir");
+        miSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSalirActionPerformed(evt);
+            }
+        });
         jMenu2.add(miSalir);
 
         jMenuBar1.add(jMenu2);
@@ -134,6 +150,23 @@ public class FrmMantenimientoInstructor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresarActionPerformed
+        // TODO add your handling code here:
+        FrmIngresoInstructor frm = new FrmIngresoInstructor();
+        frm.setVisible(true);
+    }//GEN-LAST:event_bIngresarActionPerformed
+
+    private void miSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_miSalirActionPerformed
+
+    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
+        // TODO add your handling code here:
+        FrmIngresoInstructor frm = new FrmIngresoInstructor();
+        frm.setVisible(true);
+    }//GEN-LAST:event_bEditarActionPerformed
 
     /**
      * @param args the command line arguments
